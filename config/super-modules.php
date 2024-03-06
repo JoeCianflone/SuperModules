@@ -1,42 +1,119 @@
 <?php declare(strict_types=1);
 
 return [
-    [
-        "module_root" => 'Modules',
-        "module_root_namespace" => "JoeCianflone",
-        "module_map" => [
-            'module-composer:composer.json',
-            'module-config:/config' => [
-                'module.config.php'
-            ],
-            'module-database:/database' => [
-                'module-migrations:/migrations' => [],
-                'module-factories:/factories' => [],
-                'module-seeders:/seeders' => []
-            ],
-            '/routes' => [
-                'web.routes.php',
-                'api.routes.php'
-            ],
-            'module-src:/src' => [
-                'module-service-provider:ModuleServiceProvider.php',
-                'module-providers:/Providers' => [
-                    'RouteServiceProvider.php',
-                ],
-                '/Domain' => [
-                    'module-model:/Models' => [
-                        'Module.php'
-                    ]
-                ],
-                '/Presentation' => [
-                    '/Http' => [
-                        'module-contollers:/Controllers' => [],
-                        'module-request:/Requests' => [],
-                        'module-resource:/Resources' => [],
+        'namespaces' => [
+            'root_namespace' => 'Super',
+        ],
+        'paths' => [
+            'root_folder' => 'modules',
+            'module_src_folder' => 'src',
+        ],
+        'scaffolding' => [
+            '{{root_folder}}' => [
+                '{{module}}' => [
+                    '{{module_root}}',
+                    'config' => [
+                        "{{module_config}}",
                     ],
-                    'module-commands:/Commands' => [],
+                    'database' => [
+                        'factories' => [
+                            "{{module_database_factories}}"
+                        ],
+                        'migrations' => [
+                            "{{module_database_migrations}}"
+                        ],
+                        'seeders' => [
+                            "{{module_database_seeders}}"
+                        ],
+                    ],
+                    'routes' => [
+                        "{{module_routes}}"
+                    ],
+                    'resources' => [
+                        'mail' => [
+                            "{{module_mail}}"
+                        ],
+                        'lang' => [
+                            "{{module_lang}}"
+                        ]
+                    ],
+                    'tests' => [
+                        "{{module_tests}}",
+                        'Unit' => [],
+                        'Feature' => [],
+                    ],
+                    '{{module_src_folder}}' => [
+                        '{{module_service_provider}}',
+                        'Providers' => [
+                            "{{module_service_providers}}"
+                        ],
+                        'Exceptions' =>  [
+                            "{{module_exceptions}}"
+                        ],
+                        'Domain' => [
+                            'Contracts' => [],
+                            'Data' => [
+                                'Casts' => [
+                                    "{{module_casts}}"
+                                ],
+                                'DataObjects' => [],
+                                'ValueObjects' => [],
+                            ],
+                            'Handlers' => [],
+                            'Concerns' => [],
+                            'Repositories' => [
+                                "{{module_repositories}}"
+                            ],
+                            'Collections' => [
+                                "{{module_collections}}"
+                            ],
+                            'Models' => [
+                                "{{module_models}}"
+                            ],
+                            'QueryBuilders' => [
+                                'QueryObjects' => [],
+                            ],
+                        ],
+                        'Presentation' => [
+                            'Contracts' => [],
+                            'Concerns' => [],
+                            'Http' => [
+                                'Controllers' => [
+                                    "{{module_controllers}}"
+                                ],
+                                'Requests' => [
+                                    "{{module_requests}}"
+                                ],
+                                'Resources' => [
+                                    "{{module_resources}}"
+                                ],
+                            ],
+                            'ConsoleCommands' => [
+                                "{{module_console}}"
+                            ],
+                            'Jobs' => [
+                                "{{module_jobs}}"
+                            ],
+                        ],
+                        'Services' => [
+                            'Contracts' => [],
+                            'Concerns' => [],
+                            'Actions' => [
+                                'QueryActions' => [],
+                                'CommandActions' => [],
+                            ],
+                            'Broadcasting' => [
+                                '{{module_channels}}',
+                            ],
+                            'Events' => [
+                                "{{module_events}}"
+                            ],
+                            'Listeners' => [
+                                "{{module_listeners}}"
+                            ],
+                        ],
+                    ],
                 ]
-            ]
-        ]
-    ]
+            ],
+        ],
 ];

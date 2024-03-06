@@ -1,0 +1,24 @@
+{
+	"name": "{{package_name}}",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"{{module_namespace}}\\": "{{module_path}}/",
+			"{{tests_namespace}}\\": "{{tests_path}}/",
+			"{{database_factories_namespace}}\\": "{{database_factories_path}}/",
+			"{{database_seeders_namespace}}\\": "{{database_seeders_path}}/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"{{module_service_provider_namespace}}"
+			]
+		}
+	}
+}
