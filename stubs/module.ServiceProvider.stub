@@ -3,20 +3,21 @@
 namespace {{namespace}};
 
 use Illuminate\Support\ServiceProvider;
+use {{module_service_providers_namespace}}\RouteServiceProvider;
 
 class {{class}} extends ServiceProvider
 {
 
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'{{config}}', '{{config_name}}');
+        $this->mergeConfigFrom(__DIR__.'/../{{config}}', '{{config_name}}');
 
-        $this->app->register({{module_service_providers_namespace}}\RouteServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
     }
 
 
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__.'{{module_database_migrations}}');
+        $this->loadMigrationsFrom(__DIR__.'/../{{module_database_migrations}}');
     }
 }

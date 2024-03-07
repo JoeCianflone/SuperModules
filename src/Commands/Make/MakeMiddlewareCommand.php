@@ -2,8 +2,8 @@
 
 namespace JoeCianflone\SuperModules\Commands\Make;
 
-use JoeCianflone\SuperModules\Concerns\MakeInModule;
 use Illuminate\Routing\Console\MiddlewareMakeCommand;
+use JoeCianflone\SuperModules\Concerns\MakeInModule;
 
 class MakeMiddlewareCommand extends MiddlewareMakeCommand
 {

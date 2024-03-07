@@ -2,10 +2,10 @@
 
 return [
         'namespaces' => [
-            'root_namespace' => 'Super',
+            'root_namespace' => 'InsomniaCookies',
         ],
         'paths' => [
-            'root_folder' => 'modules',
+            'root_folder' => 'src',
             'module_src_folder' => 'src',
         ],
         'scaffolding' => [

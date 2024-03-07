@@ -3,11 +3,11 @@
 namespace JoeCianflone\SuperModules\Commands\Module;
 
 use Illuminate\Support\Str;
-use JoeCianflone\SuperModules\Module;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Console\GeneratorCommand;
-use JoeCianflone\SuperModules\ModuleFactory;
+use JoeCianflone\SuperModules\Module;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use JoeCianflone\SuperModules\ModuleFactory;
 use JoeCianflone\SuperModules\Concerns\CanUpdateComposer;
 
 class ModuleMakeCommand extends GeneratorCommand
@@ -59,10 +59,10 @@ class ModuleMakeCommand extends GeneratorCommand
                 "{{tests_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_tests')),
                 "{{database_factories_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_database_factories')),
                 "{{database_seeders_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_database_seeders')),
-                "{{module_path}}" => $module->path('module_root'),
-                "{{tests_path}}" => $module->path('module_tests'),
-                "{{database_factories_path}}" => $module->path('module_database_factories'),
-                "{{database_seeders_path}}" => $module->path('module_database_seeders'),
+                "{{module_path}}" => config('super-modules.paths.module_src_folder'),
+                "{{tests_path}}" => $module->relPath('module_tests'),
+                "{{database_factories_path}}" => $module->relPath('module_database_factories'),
+                "{{database_seeders_path}}" => $module->relPath('module_database_seeders'),
                 "{{module_service_provider_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_service_provider'))  . Str::studly($module->name) . "ServiceProvider",
             ]
         ]);

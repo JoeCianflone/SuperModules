@@ -40,7 +40,6 @@ class SuperModulesServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-
             $this->commands(array_merge($this->makeCommands, $this->moduleCommands, $this->helperCommands));
         }
 

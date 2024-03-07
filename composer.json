@@ -1,16 +1,16 @@
 {
     "name": "joecianflone/supermodules",
     "description": "A highly configurable module generator system for laravel",
-    "type": "library",
+    "version": "1.0.0",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "JoeCianflone\\SuperModules\\": "src/"
+            "JoeCianflone\\SuperModules\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "JoeCianflone\\SuperModules\\Tests\\": "tests/"
+            "JoeCianflone\\SuperModules\\Tests\\": "tests"
         }
     },
     "authors": [
@@ -19,14 +19,14 @@
             "email": "joe@cianflone.co"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "php": "^8.1",
+        "composer/composer": "^2.7",
         "illuminate/console": "^10.45 || ^11.0",
         "illuminate/contracts": "^10.45 || ^11.0",
         "illuminate/filesystem": "^10.45 || ^11.0",
-        "composer/composer": "^2.7",
         "illuminate/support": "^10.45 || ^11.0"
     },
     "require-dev": {
@@ -43,7 +43,8 @@
         "laravel": {
             "providers": [
                 "JoeCianflone\\SuperModules\\SuperModulesServiceProvider"
-            ]
+            ],
+            "aliases": {}
         }
     },
     "scripts": {

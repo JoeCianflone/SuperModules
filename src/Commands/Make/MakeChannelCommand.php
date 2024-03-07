@@ -2,8 +2,8 @@
 
 namespace JoeCianflone\SuperModules\Commands\Make;
 
-use JoeCianflone\SuperModules\Concerns\MakeInModule;
 use Illuminate\Foundation\Console\ChannelMakeCommand;
+use JoeCianflone\SuperModules\Concerns\MakeInModule;
 
 class MakeChannelCommand extends ChannelMakeCommand
 {
