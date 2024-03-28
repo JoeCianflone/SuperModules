@@ -2,37 +2,25 @@
 
 namespace JoeCianflone\SuperModules;
 
-use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 readonly class Module
 {
+    public string $fullPath;
+    public string $moduleFullPath;
+    public string $pascalModule;
+    public string $pascalNamespace;
+
     public function __construct(
-        public string $name,
-        public string $package,
-        public array $structure,
-        private array $paths
+        public string $root,
+        public string $namespace,
+        public string $module
     ) {
-    }
+        $this->fullPath = base_path($this->root);
+        $this->pascalNamespace = Str::studly($this->namespace);
+        $this->pascalModule = Str::studly($this->module);
 
-    public function namespace($key)
-    {
-        return $this->get($key, 'namespace');
-    }
-
-    public function path($key)
-    {
-        return $this->get($key, 'path');
-    }
-
-    public function relPath($key)
-    {
-        return $this->get($key, 'relPath');
-    }
-
-    private function get($key, $type)
-    {
-        $key = "{{".$key."}}.$type";
-        return Arr::get($this->paths, $key);
+        $this->moduleFullPath = $this->fullPath ."/{$this->pascalNamespace}";
     }
 
 }
