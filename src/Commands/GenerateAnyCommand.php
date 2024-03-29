@@ -44,8 +44,8 @@ class GenerateAnyCommand extends GeneratorCommand
 
     protected function getNamespace($name)
     {
-        $name = Str::replace(config('super-modules.paths.root_folder'), '', $name);
-        $name = Str::replace(config('super-modules.paths.module_src_folder'), '', $name);
+        $name = Str::replace(config('super-modules.module_namespace'), '', $name);
+        $name = Str::replace(config('super-modules.module_src_folder'), '', $name);
         $name = Str::replace('\\\\', '\\', $name);
 
         return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
@@ -70,6 +70,6 @@ class GenerateAnyCommand extends GeneratorCommand
 
     protected function rootNamespace()
     {
-        return config('super-modules.namespaces.root_namespace');
+        return config('super-modules.module_namespace');
     }
 }

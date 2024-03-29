@@ -57,13 +57,13 @@ trait CanUpdateComposer
 
         $module_config = [
             'type' => 'path',
-            'url' => strtolower(config('super-modules.paths.root_folder').'/*'),
+            'url' => strtolower(config('super-modules.module_namespace').'/*'),
             'options' => [
                 'symlink' => true,
             ],
         ];
 
-        $composerName = $module->package;
+        $composerName = "$module->namespace/$module->name";
 
         $has_changes = false;
 

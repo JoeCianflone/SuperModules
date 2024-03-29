@@ -1,0 +1,24 @@
+{
+    "name": "{{namespace}}/{{module}}",
+    "description": "",
+    "type": "library",
+    "version": "1.0",
+    "license": "proprietary",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "{{PascalNamespace}}\\{{PascalModule}}\\": "src/",
+            "{{PascalNamespace}}\\{{PascalModule}}\\Tests\\": "tests/",
+            "{{PascalNamespace}}\\{{PascalModule}}\\Database\\Factories\\": "database/factories/",
+            "{{PascalNamespace}}\\{{PascalModule}}\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "{{PascalNamespace}}\\{{PascalModule}}\\{{PascalModule}}ServiceProvider"
+            ]
+        }
+    }
+}

@@ -5,17 +5,13 @@ namespace JoeCianflone\SuperModules\Commands\Module;
 use Illuminate\Support\Str;
 use JoeCianflone\SuperModules\Module;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Console\GeneratorCommand;
-use JoeCianflone\SuperModules\ModuleFactory;
-use Illuminate\Contracts\Filesystem\Filesystem;
+
 use JoeCianflone\SuperModules\Concerns\CanUpdateComposer;
 
 class ModuleMakeCommand extends GeneratorCommand
 {
     use CanUpdateComposer;
-
-    protected Filesystem $disk;
 
     protected $name = "module:make";
 
@@ -28,129 +24,68 @@ class ModuleMakeCommand extends GeneratorCommand
     public function handle()
     {
         $module = new Module(
-            module: Str::lower($this->argument('name')),
-            namespace: Config::get('super-modules.namespace'),
-            root: Config::get('super-modules.root_path'),
+            name: Str::lower($this->argument('name')),
+            namespace: Str::lower(Config::get('super-modules.module_namespace')),
+            root: Config::get('super-modules.module_path'),
         );
 
-        // $module = ModuleFactory::make(
-        //     name: $this->argument('name')
-        // );
+        $this->files->copyDirectory(__DIR__.'/../../../stubs/Module', $module->moduleFullPath);
+        $this->info('Wrote Structure');
 
+        $this->writeComposer($module);
+        $this->writeConfig($module);
+        $this->writeServiceProvider($module);
 
-        $this->disk = Storage::build([
-            'driver' => 'local',
-            'root' => base_path('/'),
-        ]);
-
-        $this->disk->makeDirectory(__DIR__."/../../stubs/Module");
-
-        // $this->writeFolders(folders: $module->structure, path: '');
-        // $this->writeComposer($module);
-        // $this->writeRoutes($module);
-        // $this->writeConfig($module);
-        // $this->writeServiceProvider($module);
-
-        // $this->updateRootComposerFile($module);
+        $this->updateRootComposerFile($module);
 
         return self::SUCCESS;
     }
 
-    // private function writeComposer(Module $module)
-    // {
-    //     $this->call('make:any', [
-    //         'module' => $module->name,
-    //         'name' => $module->path("module_root").'/composer.json',
-    //         'stub' => 'module.composer.stub',
-    //         'namespace' => '',
-    //         'tokens' => [
-    //             "{{package_name}}" => $module->package,
-    //             "{{module_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_root')),
-    //             "{{tests_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_tests')),
-    //             "{{database_factories_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_database_factories')),
-    //             "{{database_seeders_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_database_seeders')),
-    //             "{{module_path}}" => config('super-modules.paths.module_src_folder'),
-    //             "{{tests_path}}" => $module->relPath('module_tests'),
-    //             "{{database_factories_path}}" => $module->relPath('module_database_factories'),
-    //             "{{database_seeders_path}}" => $module->relPath('module_database_seeders'),
-    //             "{{module_service_provider_namespace}}" => Str::replace('\\', '\\\\', $module->namespace('module_service_provider'))  . Str::studly($module->name) . "ServiceProvider",
-    //         ]
-    //     ]);
-    // }
+    private function writeComposer(Module $module): void
+    {
+        $this->call('make:any', [
+            'module' => $module->name,
+            'name' => $module->makePath('composer') . 'composer.json',
+            'stub' => 'module.composer.stub',
+            'namespace' => '',
+            'tokens' => [
+                '{{namespace}}' => $module->namespace,
+                '{{module}}' => $module->name,
+                '{{PascalNamespace}}' => $module->pascalNamespace,
+                '{{PascalModule}}' => $module->pascalName,
+            ]
+        ]);
+    }
 
-    // private function writeConfig(Module $module): void
-    // {
-    //     $this->call('make:any', [
-    //         'module' => $module->name,
-    //         'name' => $module->path("module_config").'/'.$module->name.'.config.php',
-    //         'stub' => 'module.config.stub',
-    //         'namespace' => '',
-    //         'tokens' => [
-    //             "{{module}}" => $module->name,
-    //         ]
-    //     ]);
-    // }
+    private function writeConfig(Module $module): void
+    {
+        $this->call('make:any', [
+            'module' => $module->name,
+            'name' => $module->makePath('config'). $module->name.'.config.php',
+            'stub' => 'module.config.stub',
+            'namespace' => '',
+            'tokens' => [
+                "{{module}}" => $module->name,
+            ]
+        ]);
+    }
 
-    // private function writeFolders(array $folders, string $path): void
-    // {
-    //     // collect($folders)->each(function ($folderContent, $folderName) use ($path) {
-    //     //     if (is_int($folderName)) {
-    //     //         return;
-    //     //     }
-    //     //     $path .= "{$folderName}/";
-    //     //     $this->disk->makeDirectory($path);
-    //     //     return $this->writeFolders(folders: $folderContent, path: $path);
-    //     // });
-    // }
-
-    // private function writeRoutes(Module $module): void
-    // {
-    //     $this->call('make:any', [
-    //         'module' => $module->name,
-    //         'name' => $module->path("module_routes").'/web.routes.php',
-    //         'stub' => 'module.routes.stub',
-    //         'namespace' => '',
-    //         'tokens' => [
-    //         ]
-    //     ]);
-
-    //     $this->call('make:any', [
-    //         'module' => $module->name,
-    //         'name' => $module->path("module_routes").'/api.routes.php',
-    //         'stub' => 'module.routes.stub',
-    //         'namespace' => '',
-    //         'tokens' => [
-    //         ]
-    //     ]);
-    // }
-
-    // private function writeServiceProvider(Module $module)
-    // {
-    //     $this->call('make:any', [
-    //         'module' => $module->name,
-    //         'name' => $module->path("module_service_provider").'/'.Str::studly($module->name).'ServiceProvider.php',
-    //         'stub' => 'module.ServiceProvider.stub',
-    //         'namespace' => '',
-    //         'tokens' => [
-    //             "{{class}}" => Str::studly($module->name).'ServiceProvider',
-    //             "{{module_database_migrations}}" => $module->path('module_database_migrations'),
-    //             "{{config}}" => $module->relPath('module_config'). "/". $module->name . ".config.php",
-    //             "{{config_name}}" =>  $module->name . ".config.php",
-    //             "{{module_service_providers_namespace}}" => $module->namespace('module_service_providers'),
-    //         ]
-    //     ]);
-
-    //     $this->call('make:any', [
-    //         'module' => $module->name,
-    //         'name' => $module->path("module_service_providers").'/'.'RouteServiceProvider',
-    //         'stub' => 'module.RouteServiceProvider.stub',
-    //         'namespace' => '',
-    //         'tokens' => [
-    //             "{{prefix}}" => $module->name,
-    //             "{{module_route_path}}" => $module->path('module_routes')
-    //         ]
-    //     ]);
-    // }
+    private function writeServiceProvider(Module $module)
+    {
+        $this->call('make:any', [
+            'module' => $module->name,
+            'name' => $module->makePath('module_service_provider') . $module->pascalName.'ServiceProvider.php',
+            'stub' => 'module.ServiceProvider.stub',
+            'namespace' => '',
+            'tokens' => [
+                "{{class}}" => $module->pascalName.'ServiceProvider',
+                // "{{module_database_migrations}}" => $module->path('module_database_migrations'),
+                // "{{config}}" => $module->relPath('module_config'). "/". $module->name . ".config.php",
+                // "{{config_name}}" =>  $module->name . ".config.php",
+                // "{{module_service_providers_namespace}}" => $module->namespace('module_service_providers'),
+            ]
+        ]);
+    }
 
 
 }
