@@ -40,6 +40,7 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->line('Updating the main composer.json ');
         $this->updateMainComposer();
         $this->line('Done.');
+        $this->info("you should now run composer update");
     }
 
     protected function getStub()
@@ -105,7 +106,7 @@ class ModuleMakeCommand extends GeneratorCommand
             'module' => $this->module,
             '--src' => true,
             'tokens' => [
-                '{{namespace}}' => config('super-modules.rootNamespace').config('super-modules.namespaces.provider'),
+                '{{namespace}}' => config('super-modules.rootNamespace')."\\".$this->argument('name').config('super-modules.namespaces.provider'),
                 '{{class}}' => $providerName,
                 '{{moduleName}}' => $this->module,
                 '{{migrationPath}}' => Str::replace('\\', '/', config('super-modules.namespaces.migration')),
