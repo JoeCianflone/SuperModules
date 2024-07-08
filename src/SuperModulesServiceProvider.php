@@ -3,44 +3,31 @@
 namespace JoeCianflone\SuperModules;
 
 use Illuminate\Support\ServiceProvider;
-use JoeCianflone\SuperModules\Commands\GenerateAnyCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeJobCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeCastCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeMailCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeTestCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeEventCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeChannelCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeConsoleCommand;
-use JoeCianflone\SuperModules\Commands\Module\ModuleMakeCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeExceptionCommand;
-use JoeCianflone\SuperModules\Commands\Make\MakeMiddlewareCommand;
-use JoeCianflone\SuperModules\Commands\Module\ModuleMigrateCommand;
+use JoeCianflone\SuperModules\Console\Commands\AnyMakeCommand;
+use JoeCianflone\SuperModules\Console\Commands\ModuleMakeCommand;
+use JoeCianflone\SuperModules\Console\Commands\CastMakeModuleCommand;
+use JoeCianflone\SuperModules\Console\Commands\ModelMakeModuleCommand;
+use JoeCianflone\SuperModules\Console\Commands\ChannelMakeModuleCommand;
+use JoeCianflone\SuperModules\Console\Commands\FactoryMakeModuleCommand;
+use JoeCianflone\SuperModules\Console\Commands\MigrationMakeModuleCommand;
 
 class SuperModulesServiceProvider extends ServiceProvider
 {
-    protected array $helperCommands = [
-        GenerateAnyCommand::class,
-    ];
-    protected array $makeCommands = [
-        MakeCastCommand::class,
-        MakeChannelCommand::class,
-        MakeConsoleCommand::class,
-        MakeEventCommand::class,
-        MakeExceptionCommand::class,
-        MakeJobCommand::class,
-        MakeMailCommand::class,
-        MakeMiddlewareCommand::class,
-        MakeTestCommand::class,
-    ];
-    protected array $moduleCommands = [
+    private array $makeCommands = [
+        AnyMakeCommand::class,
+        CastMakeModuleCommand::class,
+        ChannelMakeModuleCommand::class,
+        FactoryMakeModuleCommand::class,
+        MigrationMakeModuleCommand::class,
+        ModelMakeModuleCommand::class,
         ModuleMakeCommand::class,
-        ModuleMigrateCommand::class,
     ];
 
     public function boot(): void
     {
+
         if ($this->app->runningInConsole()) {
-            $this->commands(array_merge($this->makeCommands, $this->moduleCommands, $this->helperCommands));
+            $this->commands(array_merge($this->makeCommands));
         }
 
         $this->publishes([

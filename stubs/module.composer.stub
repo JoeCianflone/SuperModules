@@ -7,17 +7,17 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "{{PascalNamespace}}\\{{PascalModule}}\\": "src/",
-            "{{PascalNamespace}}\\{{PascalModule}}\\Tests\\": "tests/",
-            "{{PascalNamespace}}\\{{PascalModule}}\\Database\\Factories\\": "database/factories/",
-            "{{PascalNamespace}}\\{{PascalModule}}\\Database\\Seeders\\": "database/seeders/"
+            "{{ModuleRootNamespace}}\\{{ModuleName}}\\": "src/",
+            "{{ModuleRootNamespace}}\\{{ModuleName}}\\Tests\\": "tests/",
+            "{{ModuleRootNamespace}}\\{{ModuleName}}\\Database\\Factories\\": "database/factories/",
+            "{{ModuleRootNamespace}}\\{{ModuleName}}\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
-                "{{PascalNamespace}}\\{{PascalModule}}\\{{PascalModule}}ServiceProvider"
+                "{{ModuleRootNamespace}}\\{{ModuleName}}{{ServiceProviderNamespace}}\\{{ModuleName}}ServiceProvider"
             ]
         }
     }

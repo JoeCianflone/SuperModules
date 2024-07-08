@@ -1,70 +1,67 @@
+# SuperModules
+
+I build kinda big-ish things and to that end I love modules. There are a couple really 
+good module packages out there, but I wanted 1) a very particular module style 
+and 2) the ability to change that structure whenever I fancy. 
+
+To that end I've created this package. SuperModules has a distinct package layout
+and is flexible enough to allow you to change it! 
+
+Before we dig into *how* to use this, let me show you the structure that I 
+have as the default. You can change this, all of this, but here's where we're 
+at to begin.
+
 ## Project Folders .............................................................
+```
+module-name
+    composer.json
+    module-name.routes.php
+    module-name.config.php
+    database
+        factories
+        migrations
+        seeders
+    tests
+        Feature
+        Unit
+    resources
+        email
+        lang
+        views
+    Application
+        Events
+        Listeners
+        Services
+    Infrastructure
+        Exceptions
+            {{ModuleName}}ModuleException.php
+        Providers
+            {{ModuleName}}ServiceProvider.php       
+    Presentation
+        Http
+            Controllers
+            Requests
+            Responses
+        Console
+    Domain
+        Data
+            Collections
+            DataObjects
+            ValueObjects
+        Services
+            Actions
+            Commands
+            Handlers
+            Queries 
+            QueryBuilders
+        Models
+            {{ModuleName}}.php
+        Repositories
+            {{ModuleName}}Repository.php
+```
 
-SuperModules
-    /config
-        super-modules.php
-    /stubs
-        /module.composer.stub
-        /module.route-service-provider.stub
-        /module.service-provider.stub
-        /module.routes.stub
-        /module.config.stub
-        /module.lang.stub
-    /src
-        /Contracts
-            /Actions
-                /UpdateProjectComposer.php
-                /CreatesModuleComposer.php
-                /CreatesModule.php
-                /UpdatesModule.php
-        /Actions
-            /UpdateProjectComposer.php
-            /CreateModule.php
-        /DataObjects
-            /ModuleData.php
-            /ComposerData.php
-        /Concerns
-            /IsInModule.php
-        /Console
-            /Commands
-                /Overrides
-                    /Database
-                    /Make
-                /ModuleMakeCommand.php        
-        /MonoModsServiceProvider.php
-
-
-## Structure ...................................................................
-
-/Modules
-    /ModuleName
-        /config
-        /routes
-        /database
-            /migrations --> artisan make:migration
-            /factories  --> artisan make:factory
-            /seeders    --> artisan make:seeder
-        /src
-            /ModuleNameServiceProvider.php
-            /Domain
-                /Contracts
-                /Concerns
-                /Models --> artisan make:model
-                /Collections --> artisan make:collection
-            /Services
-                /Events --> artisan make:event
-            /Presentation
-                /Http
-                    /Controllers --> artisan make:controller
-                    /Requests    --> artisan make:request
-                    /Resources   --> artisan make:resource
-                /Commands --> artisan make:command 
-                /Jobs
-        /tests
-            /Unit 
-            /Integration
-            /Architecture
-
+I call this style DDDish because I do break things into App/Infra/Present/Domain
+but I'm probably a little liberay in what I put into those folders.   
 
 ## Config ......................................................................
 
@@ -112,14 +109,7 @@ SuperModules
 ## Commands ....................................................................
 
 ```bash
-
-$ php artisan module:init 
-$ php artisan make:module {name}
-$ php artisan module:remove {name}
-$ php artisan module:list
-
-$ php artisan make:migration create_something_table --module={module}
-$ php artisan migrate --module={module}
-$ php artisan make:model User --module={module}
-
+php artisan make:module {module-name}
+php artisan module:migration {module-name}
+php artisan module:migrate:fresh {module-name}
 ```

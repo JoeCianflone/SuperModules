@@ -8,11 +8,12 @@ class {{class}} extends ServiceProvider
 {
     public function boot(): void
     {
-        // $this->loadMigrationsFrom(__DIR__.'/../modules/Orders/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../{{migrationPath}}');
+        $this->loadRoutesFrom(__DIR__.'/../{{routePath}}/{{moduleName}}.routes.php');
     }
 
     public function register(): void
     {
-        // $this->mergeConfigFrom(__DIR__.'/../config/orders.config.php', 'orders.config.php');
+        $this->mergeConfigFrom(__DIR__.'/../{{configPath}}/{{moduleName}}.config.php', '{{moduleName}}.config.php');
     }
 }
