@@ -2,7 +2,6 @@
 
 namespace JoeCianflone\SuperModules\Console\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -54,23 +53,6 @@ class AnyMakeCommand extends GeneratorCommand
         ]);
     }
 
-    // protected function getNamespace($name)
-    // {
-    //     $name = Str::replace(config('super-modules.module_namespace'), '', $name);
-    //     $name = Str::replace(config('super-modules.module_src_folder'), '', $name);
-    //     $name = Str::replace('\\\\', '\\', $name);
-
-    //     return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
-    // }
-
-    // protected function getPath($name)
-    // {
-    //     $name = base_path(Str::replace('\\', '/', Str::replaceFirst($this->rootNamespace() . '\\', '', $name)));
-    //     $ext = pathinfo($name, PATHINFO_EXTENSION);
-
-    //     return $ext === '' ? $name .= '.php' : $name;
-    // }
-
     protected function replaceTokens(string $stub, array $tokens)
     {
         foreach ($tokens as $find => $replace) {
@@ -84,9 +66,4 @@ class AnyMakeCommand extends GeneratorCommand
     {
         return $this->option('src');
     }
-
-    // protected function rootNamespace()
-    // {
-    //     return config('super-modules.module_namespace');
-    // }
 }

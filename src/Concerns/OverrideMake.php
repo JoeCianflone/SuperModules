@@ -47,7 +47,7 @@ trait OverrideMake
     }
     protected function rootNamespace()
     {
-        return config('super-modules.rootNamespace');
+        return config('super-modules.rootNamespace') . "\\".$this->argument('module');
     }
 
     protected function setConfigNamespace()
