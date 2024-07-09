@@ -5,10 +5,12 @@ namespace JoeCianflone\SuperModules\Console\Commands;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use JoeCianflone\SuperModules\Concerns\OverrideMake;
+use JoeCianflone\SuperModules\Concerns\OverrideMatchingTest;
 
 class ModelMakeModuleCommand extends ModelMakeCommand
 {
     use OverrideMake;
+    use OverrideMatchingTest;
 
     protected string $configName = 'models';
 

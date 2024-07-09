@@ -15,7 +15,7 @@ class MigrationMakeModuleCommand extends BaseCommand
         $this->call('make:migration', [
             'name' => $this->argument('name'),
             '--table' => $this->option('table'),
-            '--path' => 'modules/'.$this->argument('module').'/database/migrations',
+            '--path' => 'modules/'.$this->argument('module').'/'.config('super-modules.namespaces.migration'),
         ]);
     }
 }
