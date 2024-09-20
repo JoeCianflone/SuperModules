@@ -5,6 +5,7 @@ namespace JoeCianflone\SuperModules;
 use Illuminate\Support\ServiceProvider;
 use JoeCianflone\SuperModules\Console\Commands\AnyMakeCommand;
 use JoeCianflone\SuperModules\Console\Commands\ModuleMakeCommand;
+use JoeCianflone\SuperModules\Console\Commands\ModuleRemoveCommand;
 use JoeCianflone\SuperModules\Console\Commands\JobMakeModuleCommand;
 use JoeCianflone\SuperModules\Console\Commands\CastMakeModuleCommand;
 use JoeCianflone\SuperModules\Console\Commands\MailMakeModuleCommand;
@@ -55,6 +56,7 @@ class SuperModulesServiceProvider extends ServiceProvider
         ScopeMakeModuleCommand::class,
         SeederMakeModuleCommand::class,
         TestMakeModuleCommand::class,
+        ModuleRemoveCommand::class,
     ];
 
     public function boot(): void

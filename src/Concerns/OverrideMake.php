@@ -22,7 +22,7 @@ trait OverrideMake
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace. config('super-modules.namespaces.'.$this->configNamespace());
+        return $rootNamespace . config('super-modules.namespaces.'.$this->configNamespace());
     }
 
     protected function getPath($name)
@@ -36,12 +36,14 @@ trait OverrideMake
             $name .= '.php';
         }
 
-        return $srcPath.'/'.str_replace('\\', '/', $name);
+        return preg_replace("/\/{2,}/", '/', $srcPath.'/'.str_replace('\\', '/', $name));
     }
 
     protected function getSrcPath($moduleName)
     {
-        $srcFolder = $this->useSrcPath() ? config('super-modules.srcFolderName') : "";
+        $srcFolder = $this->useSrcPath()
+            ? config('super-modules.srcFolderName')
+            : "";
 
         return config('super-modules.moduleFolderName')."/$moduleName/$srcFolder";
     }

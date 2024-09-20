@@ -40,7 +40,6 @@ class AnyMakeCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = $this->files->get($this->getStub());
-
         $stub = $this->replaceTokens($stub, $this->argument('tokens'));
 
         return $this->replaceNamespace($stub, $name)->replaceClass($stub, $name);
